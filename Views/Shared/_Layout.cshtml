@@ -1,0 +1,250 @@
+﻿<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Bricouli</title>
+
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔧</text></svg>">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- CSS Principal -->
+    <link rel="stylesheet" href="~/css/bricouli-style.css" />
+
+    <!-- CSS Additionnel pour curseur custom et progress bar -->
+    <style>
+        /* Scroll Progress Bar */
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #C1272D, #006233);
+            z-index: 9999;
+            transition: width 0.1s ease;
+        }
+
+        /* Custom Cursor (optionnel) */
+        .custom-cursor {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #C1272D;
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.2s ease;
+            display: none; /* Caché par défaut */
+        }
+
+        .cursor-follower {
+            position: fixed;
+            width: 40px;
+            height: 40px;
+            border: 2px solid rgba(193, 39, 45, 0.3);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9998;
+            display: none; /* Caché par défaut */
+        }
+
+        .custom-cursor.cursor-hover {
+            transform: scale(1.5);
+        }
+
+        .cursor-follower.cursor-hover {
+            transform: scale(1.5);
+            border-color: #C1272D;
+        }
+
+        /* Preloader */
+        .preloader {
+            position: fixed;
+            inset: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 99999;
+            transition: opacity 0.5s ease;
+        }
+
+        .preloader-content {
+            text-align: center;
+            color: white;
+        }
+
+        .preloader-logo {
+            font-size: 72px;
+            animation: bounce 1s ease-in-out infinite;
+        }
+
+        .preloader-text {
+            font-size: 24px;
+            font-weight: 700;
+            margin-top: 20px;
+            letter-spacing: 2px;
+        }
+
+        @@keyframes bounce {
+            0%, 100%
+
+        {
+            transform: translateY(0);
+        }
+
+        50% {
+            transform: translateY(-20px);
+        }
+
+        }
+
+        .loading-dots {
+            display: inline-block;
+            margin-left: 8px;
+        }
+
+            .loading-dots span {
+                display: inline-block;
+                animation: loadingDots 1.4s infinite;
+            }
+
+                .loading-dots span:nth-child(2) {
+                    animation-delay: 0.2s;
+                }
+
+                .loading-dots span:nth-child(3) {
+                    animation-delay: 0.4s;
+                }
+
+        @@keyframes loadingDots {
+            0%, 60%, 100%
+
+        {
+            opacity: 0;
+        }
+
+        30% {
+            opacity: 1;
+        }
+
+        }
+    </style>
+</head>
+<body>
+    <!-- Preloader -->
+    <div class="preloader">
+        <div class="preloader-content">
+            <div class="preloader-logo">🔧</div>
+            <div class="preloader-text">
+                BRICOULI
+                <span class="loading-dots">
+                    <span>.</span><span>.</span><span>.</span>
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="/" class="navbar-logo">🔧 Bricouli</a>
+
+            <ul class="navbar-menu">
+                <li><a href="#features">Fonctionnalités</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#comment-ca-marche">Comment ça marche</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+
+            <a href="#rejoindre" class="navbar-cta">Commencer</a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        @RenderBody()
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <h3>🔧 Bricouli</h3>
+                <p style="color: rgba(255,255,255,0.7); margin-top: 16px; line-height: 1.7;">
+                    La plateforme 100% marocaine qui connecte les clients avec les meilleurs professionnels locaux.
+                </p>
+                <div style="margin-top: 24px; display: flex; gap: 16px;">
+                    <a href="#" style="color: white; font-size: 24px; transition: transform 0.3s ease;"
+                       onmouseover="this.style.transform='translateY(-3px)'"
+                       onmouseout="this.style.transform='translateY(0)'">📘</a>
+                    <a href="#" style="color: white; font-size: 24px; transition: transform 0.3s ease;"
+                       onmouseover="this.style.transform='translateY(-3px)'"
+                       onmouseout="this.style.transform='translateY(0)'">📷</a>
+                    <a href="#" style="color: white; font-size: 24px; transition: transform 0.3s ease;"
+                       onmouseover="this.style.transform='translateY(-3px)'"
+                       onmouseout="this.style.transform='translateY(0)'">🐦</a>
+                    <a href="#" style="color: white; font-size: 24px; transition: transform 0.3s ease;"
+                       onmouseover="this.style.transform='translateY(-3px)'"
+                       onmouseout="this.style.transform='translateY(0)'">💼</a>
+                </div>
+            </div>
+
+            <div class="footer-links">
+                <h4>Pour les Clients</h4>
+                <ul>
+                    <li><a href="#">Trouver un professionnel</a></li>
+                    <li><a href="#">Comment ça marche</a></li>
+                    <li><a href="#">Catégories de services</a></li>
+                    <li><a href="#">Guide des prix</a></li>
+                    <li><a href="#">FAQ</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-links">
+                <h4>Pour les Professionnels</h4>
+                <ul>
+                    <li><a href="#">Devenir prestataire</a></li>
+                    <li><a href="#">Avantages</a></li>
+                    <li><a href="#">Tarifs</a></li>
+                    <li><a href="#">Centre d'aide</a></li>
+                    <li><a href="#">Success stories</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-links">
+                <h4>À Propos</h4>
+                <ul>
+                    <li><a href="#">Notre histoire</a></li>
+                    <li><a href="#">L'équipe</a></li>
+                    <li><a href="#">Carrières</a></li>
+                    <li><a href="#">Presse</a></li>
+                    <li><a href="#">Blog</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-links">
+                <h4>Légal</h4>
+                <ul>
+                    <li><a href="#">Mentions légales</a></li>
+                    <li><a href="#">Conditions d'utilisation</a></li>
+                    <li><a href="#">Politique de confidentialité</a></li>
+                    <li><a href="#">Cookies</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>© 2024 Bricouli. Tous droits réservés. Fièrement Made in Morocco 🇲🇦</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="~/js/bricouli-animations.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

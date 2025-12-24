@@ -1,0 +1,567 @@
+﻿/* ============================================
+   BRICOULI - Design System Pro (Apple-Style)
+   ============================================ */
+
+/* Variables CSS - Couleurs Maroc + Moderne */
+:root {
+    --primary-red: #C1272D;
+    --primary-green: #006233;
+    --dark-bg: #000000;
+    --light-bg: #ffffff;
+    --gray-50: #f9fafb;
+    --gray-100: #f3f4f6;
+    --gray-200: #e5e7eb;
+    --gray-300: #d1d5db;
+    --gray-800: #1f2937;
+    --gray-900: #111827;
+    /* Spacing */
+    --section-padding: 120px;
+    --container-max: 1200px;
+    /* Animations */
+    --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-in-out-smooth: cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+/* Reset & Base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background: var(--light-bg);
+    color: var(--gray-900);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+/* ============================================
+   NAVIGATION - Style Apple
+   ============================================ */
+
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    transition: all 0.4s var(--ease-out-expo);
+}
+
+    .navbar.scrolled {
+        background: rgba(255, 255, 255, 0.95);
+        box-shadow: 0 2px 20px rgba(0, 0, 0, 0.08);
+    }
+
+.navbar-container {
+    max-width: var(--container-max);
+    margin: 0 auto;
+    padding: 0 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 70px;
+}
+
+.navbar-logo {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--primary-red);
+    text-decoration: none;
+    letter-spacing: -0.5px;
+    transition: transform 0.3s var(--ease-out-expo);
+}
+
+    .navbar-logo:hover {
+        transform: scale(1.05);
+    }
+
+.navbar-menu {
+    display: flex;
+    gap: 40px;
+    list-style: none;
+}
+
+    .navbar-menu a {
+        color: var(--gray-800);
+        text-decoration: none;
+        font-size: 15px;
+        font-weight: 500;
+        position: relative;
+        transition: color 0.3s ease;
+    }
+
+        .navbar-menu a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-red);
+            transition: width 0.4s var(--ease-out-expo);
+        }
+
+        .navbar-menu a:hover::after {
+            width: 100%;
+        }
+
+.navbar-cta {
+    background: var(--primary-red);
+    color: white;
+    padding: 12px 28px;
+    border-radius: 25px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 15px;
+    transition: all 0.3s var(--ease-out-expo);
+    box-shadow: 0 4px 15px rgba(193, 39, 45, 0.3);
+}
+
+    .navbar-cta:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(193, 39, 45, 0.4);
+    }
+
+/* ============================================
+   HERO SECTION - Animation Parallaxe
+   ============================================ */
+
+.hero-section {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding-top: 70px;
+}
+
+.hero-background {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 20% 50%, rgba(193, 39, 45, 0.3) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(0, 98, 51, 0.3) 0%, transparent 50%);
+    animation: backgroundFloat 20s ease-in-out infinite;
+}
+
+@keyframes backgroundFloat {
+    0%, 100% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-20px);
+    }
+}
+
+.hero-content {
+    max-width: 900px;
+    text-align: center;
+    padding: 0 40px;
+    position: relative;
+    z-index: 1;
+}
+
+.hero-title {
+    font-size: clamp(48px, 8vw, 84px);
+    font-weight: 800;
+    color: white;
+    margin-bottom: 24px;
+    line-height: 1.1;
+    letter-spacing: -2px;
+    opacity: 0;
+    animation: fadeInUp 1s var(--ease-out-expo) 0.2s forwards;
+}
+
+.hero-subtitle {
+    font-size: clamp(20px, 3vw, 28px);
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 40px;
+    font-weight: 400;
+    opacity: 0;
+    animation: fadeInUp 1s var(--ease-out-expo) 0.4s forwards;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+    opacity: 0;
+    animation: fadeInUp 1s var(--ease-out-expo) 0.6s forwards;
+}
+
+.btn-primary,
+.btn-secondary {
+    padding: 18px 40px;
+    border-radius: 30px;
+    font-size: 18px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.4s var(--ease-out-expo);
+    display: inline-block;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-primary {
+    background: white;
+    color: var(--primary-red);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+    .btn-primary:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+    }
+
+.btn-secondary {
+    background: transparent;
+    color: white;
+    border: 2px solid white;
+}
+
+    .btn-secondary:hover {
+        background: white;
+        color: var(--primary-red);
+        transform: translateY(-3px);
+    }
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ============================================
+   FEATURES SECTION - Cards avec Hover 3D
+   ============================================ */
+
+.features-section {
+    padding: var(--section-padding) 40px;
+    background: var(--gray-50);
+}
+
+.section-title {
+    text-align: center;
+    font-size: clamp(36px, 5vw, 56px);
+    font-weight: 800;
+    margin-bottom: 20px;
+    color: var(--gray-900);
+    letter-spacing: -1px;
+}
+
+.section-subtitle {
+    text-align: center;
+    font-size: clamp(18px, 2.5vw, 22px);
+    color: var(--gray-800);
+    margin-bottom: 80px;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.features-grid {
+    max-width: var(--container-max);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 40px;
+}
+
+.feature-card {
+    background: white;
+    border-radius: 24px;
+    padding: 50px 40px;
+    text-align: center;
+    transition: all 0.5s var(--ease-out-expo);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    position: relative;
+    overflow: hidden;
+}
+
+    .feature-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, var(--primary-red), var(--primary-green));
+        transform: scaleX(0);
+        transition: transform 0.5s var(--ease-out-expo);
+    }
+
+    .feature-card:hover::before {
+        transform: scaleX(1);
+    }
+
+    .feature-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+    }
+
+.feature-icon {
+    font-size: 64px;
+    margin-bottom: 24px;
+    display: inline-block;
+    transition: transform 0.5s var(--ease-out-expo);
+}
+
+.feature-card:hover .feature-icon {
+    transform: scale(1.1) rotate(5deg);
+}
+
+.feature-title {
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    color: var(--gray-900);
+}
+
+.feature-description {
+    font-size: 16px;
+    color: var(--gray-800);
+    line-height: 1.7;
+}
+
+/* ============================================
+   CATEGORIES SECTION - Scroll Horizontal Smooth
+   ============================================ */
+
+.categories-section {
+    padding: var(--section-padding) 0;
+    background: white;
+    overflow: hidden;
+}
+
+.categories-scroll {
+    display: flex;
+    gap: 24px;
+    overflow-x: auto;
+    padding: 40px;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+}
+
+    .categories-scroll::-webkit-scrollbar {
+        display: none;
+    }
+
+.category-card {
+    min-width: 280px;
+    height: 360px;
+    border-radius: 20px;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.5s var(--ease-out-expo);
+}
+
+    .category-card:hover {
+        transform: scale(1.05);
+    }
+
+.category-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.7s var(--ease-out-expo);
+}
+
+.category-card:hover .category-image {
+    transform: scale(1.1);
+}
+
+.category-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+    display: flex;
+    align-items: flex-end;
+    padding: 30px;
+    transition: background 0.4s ease;
+}
+
+.category-card:hover .category-overlay {
+    background: linear-gradient(to top, rgba(193, 39, 45, 0.9), transparent);
+}
+
+.category-name {
+    color: white;
+    font-size: 24px;
+    font-weight: 700;
+    transform: translateY(0);
+    transition: transform 0.4s var(--ease-out-expo);
+}
+
+.category-card:hover .category-name {
+    transform: translateY(-10px);
+}
+
+/* ============================================
+   HOW IT WORKS - Timeline Animation
+   ============================================ */
+
+.how-it-works-section {
+    padding: var(--section-padding) 40px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.steps-container {
+    max-width: var(--container-max);
+    margin: 0 auto;
+    position: relative;
+}
+
+.step {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    margin-bottom: 100px;
+    align-items: center;
+    opacity: 0;
+    transform: translateY(50px);
+    transition: all 0.8s var(--ease-out-expo);
+}
+
+    .step.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .step:nth-child(even) {
+        direction: rtl;
+    }
+
+        .step:nth-child(even) > * {
+            direction: ltr;
+        }
+
+.step-number {
+    font-size: 120px;
+    font-weight: 900;
+    opacity: 0.2;
+    line-height: 1;
+    margin-bottom: 20px;
+}
+
+.step-title {
+    font-size: 36px;
+    font-weight: 700;
+    margin-bottom: 16px;
+}
+
+.step-description {
+    font-size: 18px;
+    line-height: 1.7;
+    opacity: 0.9;
+}
+
+.step-visual {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 80px;
+}
+
+/* ============================================
+   FOOTER
+   ============================================ */
+
+.footer {
+    background: var(--gray-900);
+    color: white;
+    padding: 80px 40px 40px;
+}
+
+.footer-content {
+    max-width: var(--container-max);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 60px;
+    margin-bottom: 60px;
+}
+
+.footer-brand h3 {
+    font-size: 28px;
+    margin-bottom: 16px;
+    color: var(--primary-red);
+}
+
+.footer-links h4 {
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+.footer-links ul {
+    list-style: none;
+}
+
+.footer-links a {
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    display: block;
+    margin-bottom: 12px;
+    transition: all 0.3s ease;
+}
+
+    .footer-links a:hover {
+        color: white;
+        padding-left: 8px;
+    }
+
+.footer-bottom {
+    text-align: center;
+    padding-top: 40px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.5);
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+
+@media (max-width: 768px) {
+    .navbar-menu {
+        display: none;
+    }
+
+    .features-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .step {
+        grid-template-columns: 1fr !important;
+    }
+
+        .step:nth-child(even) {
+            direction: ltr;
+        }
+}
