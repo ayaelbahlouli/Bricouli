@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>Test Modal Devis - Bricouli</title>
+    <style>
+        * {
+            margin: 0;
+       padding: 0;
+    box-sizing: border-box;
+        }
+        
+     body {
+         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto;
+       background: #f5f5f5;
+       padding: 40px 20px;
+        }
+        
+        .container {
+       max-width: 1200px;
+         margin: 0 auto;
+            background: white;
+padding: 40px;
+       border-radius: 12px;
+       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+ }
+        
+        h1 {
+            color: #C1272D;
+      margin-bottom: 20px;
+   font-size: 28px;
+        }
+        
+     .description {
+    color: #666;
+            line-height: 1.6;
+    margin-bottom: 30px;
+   font-size: 16px;
+}
+        
+        .test-button {
+     background: linear-gradient(135deg, #C1272D, #006233);
+      color: white;
+            padding: 14px 36px;
+       border: none;
+        border-radius: 30px;
+       font-size: 16px;
+     font-weight: 700;
+ cursor: pointer;
+         transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+        }
+    
+    .test-button:hover {
+          transform: translateY(-3px);
+            box-shadow: 0 18px 40px rgba(0, 0, 0, 0.14);
+        }
+     
+        .test-button:active {
+     transform: translateY(-1px);
+        }
+        
+  .info-box {
+      background: #f0f9ff;
+  border-left: 4px solid #C1272D;
+     padding: 15px;
+         border-radius: 4px;
+            margin-bottom: 30px;
+    font-size: 14px;
+        }
+        
+        .info-box strong {
+     color: #C1272D;
+        }
+        
+        .features {
+            display: grid;
+     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+    }
+        
+ .feature {
+        background: #f9fafb;
+  padding: 20px;
+       border-radius: 8px;
+            border: 1px solid #e5e7eb;
+        }
+        
+        .feature h3 {
+ color: #111;
+            margin-bottom: 10px;
+      font-size: 16px;
+   }
+        
+        .feature p {
+          color: #666;
+            font-size: 14px;
+   line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+    <h1>?? Test Modal Devis - Bricouli</h1>
+    
+ <div class="description">
+            Bienvenue sur la page de test du modal "Demander un Devis". 
+            Le modal s'ouvre dans un pop-up avec un formulaire à remplir.
+            Cliquez le bouton ci-dessous pour tester.
+  </div>
+    
+        <div class="info-box">
+     <strong>?? Info:</strong> Ce test utilise le vrai endpoint API. 
+            Les données seront sauvegardées en base de données SQL Server.
+        </div>
+   
+        <button class="test-button" onclick="openModal()">
+            ?? Ouvrir le Modal Devis (Test)
+ </button>
+        
+    <div class="features">
+    <div class="feature">
+                <h3>? Interactivité</h3>
+       <p>
+  • Cliquer le bouton ouvre le modal
+      • Animation slide-up fluide
+     • Overlay semi-transparent
+     </p>
+            </div>
+     
+       <div class="feature">
+                <h3>?? Formulaire</h3>
+        <p>
+    • 9 champs requis
+     • Validation HTML5
+  • Placeholder utiles
+    </p>
+        </div>
+       
+            <div class="feature">
+   <h3>?? Fermeture</h3>
+                <p>
+   • Bouton X
+      • Bouton Annuler
+        • Cliquer l'overlay
+           • Touche Escape
+        </p>
+            </div>
+            
+   <div class="feature">
+       <h3>?? Sauvegarde</h3>
+    <p>
+      • POST à /Home/SubmitDevis
+          • Validation serveur
+         • Notification de succès
+           </p>
+   </div>
+     </div>
+    </div>
+    
+    <!-- Modal HTML (copié de la vraie page) -->
+    <div id="devisModal" class="modal" role="dialog" aria-labelledby="devisModalTitle" aria-hidden="true">
+        <div class="modal-overlay"></div>
+<div class="modal-container" role="document">
+            <div class="modal-header" style="background: linear-gradient(90deg, #C1272D, #006233); padding: 20px 24px; display: flex; justify-content: space-between; align-items: center; border-radius: 16px 16px 0 0;">
+      <h2 id="devisModalTitle" style="margin: 0; color: white; font-size: 20px; font-weight: 800;">Demander un Devis</h2>
+    <button id="closeDevisModal" class="modal-close" aria-label="Fermer le formulaire" style="background: rgba(255,255,255,0.12); border: none; color: white; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 8px; cursor: pointer; font-size: 20px;">?</button>
+            </div>
+      <div class="modal-body" style="padding: 24px; max-height: 70vh; overflow-y: auto;">
+     <form id="devisForm" style="display: flex; flex-direction: column; gap: 18px;">
+           
+         <div class="form-group" style="display: flex; flex-direction: column;">
+            <label style="font-weight: 700; color: #1f2937; margin-bottom: 8px; font-size: 14px;">Votre Nom Complet <span style="color: #C1272D;">*</span></label>
+        <input type="text" name="Name" placeholder="Jean Dupont" required style="padding: 12px 14px; border: 1px solid #e5e7eb; border-radius: 10px; font-size: 15px; font-family: inherit;" />
+          </div>
+            
+  <div class="form-group" style="display: flex; flex-direction: column;">
+       <label style="font-weight: 700; color: #1f2937; margin-bottom: 8px; font-size: 14px;">Votre Email <span style="color: #C1272D;">*</span></label>
+        <input type="email" name="Email" placeholder="jean@example.com" required style="padding: 12px 14px; border: 1px solid #e5e7eb; border-radius: 10px; font-size: 15px; font-family: inherit;" />
+      </div>
+        
+               <div class="form-group" style="display: flex; flex-direction: column;">
+            <label style="font-weight: 700; color: #1f2937; margin-bottom: 8px; font-size: 14px;">Votre Téléphone <span style="color: #C1272D;">*</span></label>
+      <input type="tel" name="Phone" placeholder="+2126XX XXX XXX" required style="padding: 12px 14px; border: 1px solid #e5e7eb; border-radius: 10px; font-size: 15px; font-family: inherit;" />
+          </div>
+          
+     <div class="form-group" style="display: flex; flex-direction: column;">
+          <label style="font-weight: 700; color: #1f2937; margin-bottom: 8px; font-size: 14px;">Catégorie de Service <span style="color: #C1272D;">*</span></label>
+        <select name="Category" required style="padding: 12px 14px; border: 1px solid #e5e7eb; border-radius: 10px; font-size: 15px; font-family: inherit;">
+   <option value="">-- Sélectionnez une catégorie --</option>
+         <option value="plomberie">?? Plomberie</option>
+     <option value="electricite">? Électricité</option>
+                 <option value="menuiserie">?? Menuiserie</option>
+       <option value="peinture">?? Peinture</option>
+     <option value="jardinage">?? Jardinage</option>
+  <option value="demenagement">?? Déménagement</option>
+              <option value="evenements">?? Événements</option>
+    <option value="musique">?? Musique</option>
+           </select>
+       </div>
+           
+ <div class="form-group" style="display: flex; flex-direction: column;">
+         <label style="font-weight: 700; color: #1f2937; margin-bottom: 8px; font-size: 14px;">Lieu de l'intervention <span style="color: #C1272D;">*</span></label>
+       <input type="text" name="Location" placeholder="Casablanca, Marrakech..." required style="padding: 12px 14px; border: 1px solid #e5e7eb; border-radius: 10px; font-size: 15px; font-family: inherit;" />
+   </div>
+        
+     <div class="form-group" style="display: flex; flex-direction: column;">
+     <label style="font-weight: 700; color: #1f2937; margin-bottom: 8px; font-size: 14px;">Budget estimé (MAD)</label>
+           <input type="number" name="Budget" placeholder="Ex: 5000" min="0" style="padding: 12px 14px; border: 1px solid #e5e7eb; border-radius: 10px; font-size: 15px; font-family: inherit;" />
+      </div>
+        
+         <div class="form-group" style="display: flex; flex-direction: column;">
+   <label style="font-weight: 700; color: #1f2937; margin-bottom: 8px; font-size: 14px;">Description de votre projet <span style="color: #C1272D;">*</span></label>
+        <textarea name="Description" placeholder="Décrivez votre besoin en détail..." rows="6" required style="padding: 12px 14px; border: 1px solid #e5e7eb; border-radius: 10px; font-size: 15px; font-family: inherit; resize: vertical;"></textarea>
+         </div>
+           
+    <div class="form-group" style="display: flex; flex-direction: column;">
+   <label style="font-weight: 700; color: #1f2937; margin-bottom: 8px; font-size: 14px;">Urgence <span style="color: #C1272D;">*</span></label>
+        <select name="Urgency" required style="padding: 12px 14px; border: 1px solid #e5e7eb; border-radius: 10px; font-size: 15px; font-family: inherit;">
+                <option value="">-- Sélectionnez l'urgence --</option>
+      <option value="immediate">Immédiate (dans les 24h)</option>
+    <option value="week">Cette semaine</option>
+              <option value="month">Ce mois</option>
+   <option value="flexible">Flexible</option>
+  </select>
+ </div>
+   
+    <div style="display: flex; gap: 12px; margin-top: 18px;">
+     <button type="submit" style="flex: 1; padding: 12px 18px; background: linear-gradient(135deg, #C1272D, #006233); color: white; border: none; border-radius: 10px; font-weight: 800; font-size: 16px; cursor: pointer;">Envoyer ma demande</button>
+       <button type="button" id="closeDevisModal2" style="flex: 1; padding: 12px 18px; background: white; color: #C1272D; border: 1px solid #C1272D; border-radius: 10px; font-weight: 800; font-size: 16px; cursor: pointer;">Annuler</button>
+             </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <!-- CSS Modal -->
+    <style>
+        .modal {
+            display: none;
+      position: fixed;
+          inset: 0;
+  z-index: 12000;
+            align-items: center;
+     justify-content: center;
+       padding: 20px;
+        }
+        
+        .modal.show {
+            display: flex;
+        }
+        
+     .modal-overlay {
+       position: fixed;
+     inset: 0;
+background: rgba(0, 0, 0, 0.6);
+ backdrop-filter: blur(4px);
+     -webkit-backdrop-filter: blur(4px);
+        }
+        
+        @keyframes slideUp {
+            from {
+      opacity: 0;
+           transform: translateY(50px);
+}
+            to {
+      opacity: 1;
+   transform: translateY(0);
+          }
+        }
+        
+    .modal-container {
+            position: relative;
+      background: #ffffff;
+      border-radius: 16px;
+            width: 100%;
+            max-width: 800px;
+  max-height: 90vh;
+     overflow: hidden;
+       box-shadow: 0 30px 80px rgba(15, 23, 42, 0.12);
+   border: 1px solid rgba(17, 24, 39, 0.04);
+   display: flex;
+            flex-direction: column;
+      animation: slideUp 0.36s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+   
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+border-color: #C1272D;
+            box-shadow: 0 8px 30px rgba(193, 39, 45, 0.08);
+       transform: translateY(-2px);
+        }
+    </style>
+    
+    <!-- JavaScript Modal -->
+    <script>
+        const modal = document.getElementById('devisModal');
+    const openBtn = document.querySelector('[onclick="openModal()"]');
+ const closeBtn = document.getElementById('closeDevisModal');
+        const closeBtn2 = document.getElementById('closeDevisModal2');
+        const overlay = modal.querySelector('.modal-overlay');
+    const devisForm = document.getElementById('devisForm');
+        
+        function openModal() {
+            modal.classList.add('show');
+     document.documentElement.style.overflow = 'hidden';
+ const firstInput = modal.querySelector('input');
+ if (firstInput) {
+       setTimeout(() => firstInput.focus(), 80);
+            }
+        }
+        
+        function closeModal() {
+      modal.classList.remove('show');
+            document.documentElement.style.overflow = '';
+        }
+        
+        closeBtn.addEventListener('click', closeModal);
+        closeBtn2.addEventListener('click', closeModal);
+  overlay.addEventListener('click', closeModal);
+        
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modal.classList.contains('show')) {
+                closeModal();
+   }
+        });
+      
+        // Form submission
+        devisForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+    const formData = new FormData(devisForm);
+          const data = {
+       name: formData.get('Name'),
+     email: formData.get('Email'),
+          phone: formData.get('Phone'),
+    category: formData.get('Category'),
+         location: formData.get('Location'),
+                budget: formData.get('Budget') ? parseInt(formData.get('Budget')) : 0,
+     description: formData.get('Description'),
+         urgency: formData.get('Urgency')
+      };
+      
+ try {
+             const response = await fetch('/Home/SubmitDevis', {
+               method: 'POST',
+ headers: {
+   'Content-Type': 'application/json'
+         },
+  body: JSON.stringify(data)
+     });
+    
+    if (response.ok) {
+      const result = await response.json();
+         
+    // Show notification
+   const notification = document.createElement('div');
+  notification.style.cssText = `
+         position: fixed;
+      top: 20px;
+   right: 20px;
+            background: #059669;
+      color: white;
+      padding: 16px 20px;
+border-radius: 10px;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+      z-index: 13000;
+            font-weight: 600;
+         `;
+   notification.textContent = '? ' + result.message;
+              document.body.appendChild(notification);
+    
+          // Reset and close
+         devisForm.reset();
+         closeModal();
+           
+    // Remove notification
+    setTimeout(() => notification.remove(), 4000);
+       } else {
+    const error = await response.json();
+           alert('Erreur: ' + (error.message || 'Impossible de soumettre'));
+    }
+          } catch (error) {
+      console.error('Erreur:', error);
+    alert('Erreur de connexion');
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,37 @@
+@model IEnumerable<Bricouli.Models.ContactMessage>
+@{
+    ViewData["Title"] = "Messages";
+}
+
+<div class="admin-toolbar">
+    <a class="btn-primary" asp-area="Admin" asp-controller="ContactMessages" asp-action="Create">Ajouter</a>
+</div>
+
+<div class="admin-table-wrap admin-fade">
+    <table class="admin-table">
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Email</th>
+                <th>Message</th>
+                <th>Date</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Name</td>
+                <td>@item.Email</td>
+                <td class="admin-truncate">@item.Message</td>
+                <td>@item.CreatedAt.ToString("yyyy-MM-dd")</td>
+                <td class="admin-actions-cell">
+                    <a asp-area="Admin" asp-controller="ContactMessages" asp-action="Edit" asp-route-id="@item.Id">Modifier</a>
+                    <a asp-area="Admin" asp-controller="ContactMessages" asp-action="Delete" asp-route-id="@item.Id">Supprimer</a>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>

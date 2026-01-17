@@ -1,0 +1,101 @@
+﻿@page
+@model Bricouli.Pages.BecomeProviderModel
+@{
+ Layout = "~/Views/Shared/_Layout.cshtml";
+ ViewData["Title"] = "Devenir Prestataire";
+}
+
+<section class="features-section page-section" style="padding-top:80px;">
+ <div class="container">
+ <div class="page-hero hero-rich hero-no-line">
+ <span class="eyebrow">Prestataires</span>
+ <h2 class="section-title">Devenir Prestataire</h2>
+ <p class="section-subtitle">Connectez-vous pour proposer vos services sur Bricouli. Votre compte sera valide apres approbation.</p>
+ </div>
+
+ <div class="hero-split">
+ <div class="hero-panel">
+ <h4>Pourquoi rejoindre Bricouli ?</h4>
+ <p>Recevez des demandes qualifiees et developpez votre visibilite locale.</p>
+ </div>
+ <div class="hero-panel">
+ <h4>Ce que nous valorisons</h4>
+ <p>Professionnalisme, transparence et retours clients authentiques.</p>
+ </div>
+ </div>
+
+ <div class="info-grid">
+ <div class="info-card">
+ <div class="icon-badge">&#9889;</div>
+ <h4>Inscription eclair</h4>
+ <p>Inscription simple et rapide, sans engagement.</p>
+ </div>
+ <div class="info-card">
+ <div class="icon-badge">&#128214;</div>
+ <h4>Mise en relation ciblee</h4>
+ <p>Des demandes adaptees a votre metier et a votre zone.</p>
+ </div>
+ <div class="info-card">
+ <div class="icon-badge">&#11088;</div>
+ <h4>Confiance renforcee</h4>
+ <p>Profil visible, avis clients et reputation transparente.</p>
+ </div>
+ </div>
+
+ <div class="form-card">
+ <div class="form-header">
+ <h3>Creer votre profil professionnel</h3>
+ <p class="section-muted">Completez les informations essentielles pour demarrer.</p>
+ </div>
+ <div class="form-body">
+ @if (TempData["Success"] != null)
+ {
+ <div class="contact-alert">@TempData["Success"]</div>
+ }
+ @if (Model.ExistingApplication != null)
+ {
+ <div class="info-card" style="margin-bottom: 20px;">
+ <strong>Statut actuel:</strong>
+ <span class="admin-pill status-@Model.ExistingApplication.Status">@Model.ExistingApplication.Status</span>
+ <p style="margin-top: 8px;">Votre demande est liee a votre compte et sera traitee rapidement.</p>
+ </div>
+ }
+ <form method="post" class="contact-form">
+ @Html.AntiForgeryToken()
+ <div asp-validation-summary="ModelOnly" class="field-error"></div>
+
+ <div class="form-grid compact-grid">
+ <div class="form-group">
+ <label asp-for="Application.Phone">Telephone <span class="required">*</span></label>
+ <input asp-for="Application.Phone" class="form-input" placeholder="+2126XXXXXXXX" />
+ <span asp-validation-for="Application.Phone" class="field-error"></span>
+ <div class="form-help">Format recommande : +212 6 XX XX XX XX.</div>
+ </div>
+
+ <div class="form-group">
+ <label asp-for="Application.Category">Categorie de service <span class="required">*</span></label>
+ <input asp-for="Application.Category" class="form-input" placeholder="Ex: plomberie, electricite..." />
+ <span asp-validation-for="Application.Category" class="field-error"></span>
+ <div class="form-help">Indiquez votre specialite principale.</div>
+ </div>
+ </div>
+
+ <div class="form-group">
+ <label asp-for="Application.Description">Description courte</label>
+ <textarea asp-for="Application.Description" class="form-textarea" placeholder="Quelques mots sur vos services, experience, zones desservies..." rows="5"></textarea>
+ <span asp-validation-for="Application.Description" class="field-error"></span>
+ </div>
+
+ <div class="form-actions">
+ <button type="submit" class="btn-primary" @(Model.ExistingApplication != null ? "disabled" : "")>S'inscrire</button>
+ <a class="btn-secondary" href="/">Annuler</a>
+ </div>
+ </form>
+ </div>
+ </div>
+ </div>
+</section>
+
+@section Scripts {
+ <partial name="_ValidationScriptsPartial" />
+}

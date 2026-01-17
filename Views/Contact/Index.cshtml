@@ -1,0 +1,80 @@
+@model Bricouli.Models.ContactForm
+@{
+    ViewData["Title"] = "Contact";
+}
+
+<section class="contact-hero">
+    <div class="contact-hero-bg"></div>
+    <div class="contact-wrapper">
+        <div class="contact-copy">
+            <span class="eyebrow">Contact</span>
+            <h1 class="hero-title">Parlons de votre projet</h1>
+            <p class="hero-subtitle">
+                Une question, un besoin urgent ou une idee a partager ? L'equipe Bricouli
+                vous repond sous 24h avec des solutions claires.
+            </p>
+
+            <div class="contact-info-grid">
+                <div class="contact-info-card">
+                    <div class="contact-info-label">Adresse</div>
+                    <div class="contact-info-value">Casablanca, Maroc</div>
+                </div>
+                <div class="contact-info-card">
+                    <div class="contact-info-label">Telephone</div>
+                    <div class="contact-info-value"><a href="tel:+212600000000">+212 600 000 000</a></div>
+                </div>
+                <div class="contact-info-card">
+                    <div class="contact-info-label">Email</div>
+                    <div class="contact-info-value"><a href="mailto:contact@bricouli.ma">contact@bricouli.ma</a></div>
+                </div>
+                <div class="contact-info-card">
+                    <div class="contact-info-label">Horaires</div>
+                    <div class="contact-info-value">Lun - Ven: 9h - 18h</div>
+                </div>
+            </div>
+
+            <div class="contact-actions">
+                <a class="btn-secondary" href="/Devis">Demander un devis</a>
+                <a class="btn-secondary" href="/">Retour a l'accueil</a>
+            </div>
+        </div>
+
+        <div class="contact-card">
+            <h2 class="contact-card-title">Envoyer un message</h2>
+            <p class="contact-card-subtitle">
+                Decrivez votre besoin et nous vous recontacterons rapidement.
+            </p>
+
+            @if (TempData["Success"] != null)
+            {
+                <div class="contact-alert">@TempData["Success"]</div>
+            }
+
+            <form asp-action="Index" method="post" class="contact-form">
+                @Html.AntiForgeryToken()
+                <div class="contact-form-grid">
+                    <div class="form-group">
+                        <label asp-for="Name">Nom complet</label>
+                        <input asp-for="Name" placeholder="Votre nom complet" />
+                        <span asp-validation-for="Name" class="field-error"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Email">Email</label>
+                        <input asp-for="Email" placeholder="vous@email.ma" />
+                        <span asp-validation-for="Email" class="field-error"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Message">Message</label>
+                    <textarea asp-for="Message" placeholder="Expliquez votre besoin en quelques lignes"></textarea>
+                    <span asp-validation-for="Message" class="field-error"></span>
+                </div>
+                <button type="submit" class="btn-primary">Envoyer</button>
+            </form>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

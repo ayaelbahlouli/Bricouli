@@ -1,0 +1,32 @@
+@model Bricouli.Areas.Admin.Models.AdminUserEditViewModel
+@{
+    ViewData["Title"] = "Modifier utilisateur";
+}
+
+<div class="admin-form-card admin-fade">
+    <form asp-area="Admin" asp-controller="Users" asp-action="Edit" method="post">
+        @Html.AntiForgeryToken()
+        <input type="hidden" asp-for="Id" />
+        <div class="form-grid">
+            <div class="form-group">
+                <label asp-for="Email">Email</label>
+                <input asp-for="Email" class="form-input" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Role">Role</label>
+                <select asp-for="Role" class="form-input">
+                    <option value="">Client</option>
+                    @foreach (var role in Model.AvailableRoles.Where(r => r != "User"))
+                    {
+                        var label = role == "Professional" ? "Professionnel" : role;
+                        <option value="@role">@label</option>
+                    }
+                </select>
+            </div>
+        </div>
+        <div class="form-actions">
+            <button class="btn-primary" type="submit">Enregistrer</button>
+            <a class="btn-secondary" asp-area="Admin" asp-controller="Users" asp-action="Index">Annuler</a>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,27 @@
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<div class="admin-grid">
+    <div class="admin-card admin-fade">
+        <div class="admin-card-title">Devis</div>
+        <div class="admin-metric">@ViewData["DevisCount"]</div>
+        <div class="admin-card-link">
+            <a asp-area="Admin" asp-controller="DevisRequests" asp-action="Index">Gerer les devis</a>
+        </div>
+    </div>
+    <div class="admin-card admin-fade">
+        <div class="admin-card-title">Prestataires</div>
+        <div class="admin-metric">@ViewData["ProviderCount"]</div>
+        <div class="admin-card-link">
+            <a asp-area="Admin" asp-controller="ProviderApplications" asp-action="Index">Gerer les demandes</a>
+        </div>
+    </div>
+    <div class="admin-card admin-fade">
+        <div class="admin-card-title">Messages</div>
+        <div class="admin-metric">@ViewData["MessageCount"]</div>
+        <div class="admin-card-link">
+            <a asp-area="Admin" asp-controller="ContactMessages" asp-action="Index">Gerer les messages</a>
+        </div>
+    </div>
+</div>

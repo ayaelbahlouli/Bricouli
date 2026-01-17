@@ -1,0 +1,32 @@
+@model IEnumerable<Bricouli.Areas.Admin.Models.AdminUserListItem>
+@{
+    ViewData["Title"] = "Utilisateurs";
+}
+
+<div class="admin-table-wrap admin-fade">
+    <table class="admin-table">
+        <thead>
+            <tr>
+                <th>Email</th>
+                <th>Roles</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var user in Model)
+        {
+            var rolesLabel = user.Roles
+                .Replace("Professional", "Professionnel")
+                .Replace("User", "Client");
+            <tr>
+                <td>@user.Email</td>
+                <td><span class="admin-pill">@rolesLabel</span></td>
+                <td class="admin-actions-cell">
+                    <a asp-area="Admin" asp-controller="Users" asp-action="Edit" asp-route-id="@user.Id">Modifier</a>
+                    <a asp-area="Admin" asp-controller="Users" asp-action="Delete" asp-route-id="@user.Id">Supprimer</a>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>

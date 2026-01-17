@@ -1,0 +1,132 @@
+@model Bricouli.Models.ProfileDashboardViewModel
+@{
+    ViewData["Title"] = "Mon espace";
+}
+
+<section class="features-section page-section" style="padding-top:80px;">
+    <div class="container">
+        <div class="page-hero hero-rich">
+            <span class="eyebrow">Mon espace</span>
+            <h2 class="section-title">Bonjour @(string.IsNullOrWhiteSpace(Model.FullName) ? Model.Email : Model.FullName)</h2>
+            <p class="section-subtitle">Suivez vos demandes et gerez votre profil.</p>
+            <span class="account-badge">@((Model.AccountType == "Professional") ? "Professionnel" : "Client")</span>
+            @if (!string.IsNullOrWhiteSpace(Model.AvatarUrl))
+            {
+                <img class="profile-avatar-large" src="@Model.AvatarUrl" alt="Avatar" />
+            }
+        </div>
+
+        <div class="info-grid">
+            <div class="info-card">
+                <div class="icon-badge">&#128221;</div>
+                <h4>Demandes</h4>
+                <p>@Model.Requests.Count demandes en cours.</p>
+            </div>
+            <div class="info-card">
+                <div class="icon-badge">&#9889;</div>
+                <h4>Profil</h4>
+                <p>Acces rapide a vos activites.</p>
+            </div>
+        </div>
+
+        <div class="profile-grid">
+            <div class="form-card">
+                <div class="form-header">
+                    <h3>Modifier mon profil</h3>
+                    <p class="section-muted">Mettez a jour votre nom, email, mot de passe et avatar.</p>
+                </div>
+                <div class="form-body">
+                    @if (TempData["ProfileMessage"] != null)
+                    {
+                        <div class="feed-pill" style="display:inline-flex; margin-bottom:16px;">@TempData["ProfileMessage"]</div>
+                    }
+                    <form method="post" action="/Profile/Update" class="contact-form" enctype="multipart/form-data">
+                        @Html.AntiForgeryToken()
+                        <div class="form-grid compact-grid">
+                            <div class="form-group">
+                                <label for="fullName">Nom complet</label>
+                                <input id="fullName" name="FullName" class="form-input" value="@Model.FullName" placeholder="Votre nom complet" />
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input id="email" name="Email" class="form-input" value="@Model.Email" placeholder="vous@email.ma" />
+                            </div>
+                            <div class="form-group">
+                                <label for="avatarUrl">Avatar (URL)</label>
+                                <input id="avatarUrl" name="AvatarUrl" class="form-input" value="@Model.AvatarUrl" placeholder="https://..." />
+                            </div>
+                            <div class="form-group">
+                                <label for="avatarFile">Avatar (fichier)</label>
+                                <input id="avatarFile" name="AvatarFile" type="file" class="form-input" />
+                            </div>
+                            <div class="form-group">
+                                <label for="accountType">Type de compte</label>
+                                <select id="accountType" name="AccountType" class="form-input">
+                                    @foreach (var type in Model.AvailableAccountTypes)
+                                    {
+                                        var label = type == "Professional" ? "Professionnel" : "Client";
+                                        var disabled = type == "Professional" && !Model.CanBecomeProfessional;
+                                        <option value="@type" selected="@(type == Model.AccountType)" disabled="@disabled">@label</option>
+                                    }
+                                </select>
+                                @if (!Model.CanBecomeProfessional)
+                                {
+                                    <div class="form-help">Passez par "Devenir prestataire" pour validation avant de devenir Professionnel.</div>
+                                }
+                            </div>
+                            <div class="form-group">
+                                <label for="currentPassword">Mot de passe actuel</label>
+                                <input id="currentPassword" name="CurrentPassword" type="password" class="form-input" placeholder="Requis pour modifier email/mot de passe" />
+                            </div>
+                            <div class="form-group">
+                                <label for="newPassword">Nouveau mot de passe</label>
+                                <input id="newPassword" name="NewPassword" type="password" class="form-input" placeholder="Nouveau mot de passe" />
+                            </div>
+                            <div class="form-group">
+                                <label for="confirmPassword">Confirmer le mot de passe</label>
+                                <input id="confirmPassword" name="ConfirmPassword" type="password" class="form-input" placeholder="Confirmez le mot de passe" />
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <button class="btn-primary" type="submit">Enregistrer</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="form-card" id="requests">
+                <div class="form-header">
+                    <h3>Mes demandes</h3>
+                    <p class="section-muted">Toutes vos demandes de devis recentes.</p>
+                </div>
+                <div class="form-body">
+                @if (!Model.Requests.Any())
+                {
+                    <div class="feed-empty">Aucune demande pour le moment.</div>
+                }
+                else
+                {
+                    <div class="feed-grid">
+                    @foreach (var req in Model.Requests)
+                    {
+                        <article class="feed-card">
+                            <div class="feed-card-header">
+                                <h3>@req.Category</h3>
+                                <span class="feed-meta">@req.CreatedAt.ToString("dd/MM/yyyy")</span>
+                            </div>
+                            <p class="feed-desc">@req.Description</p>
+                            <div class="feed-tags">
+                                <span class="pill">@req.Location</span>
+                                <span class="pill">Budget: @req.Budget MAD</span>
+                                <span class="pill">@req.Status</span>
+                            </div>
+                        </article>
+                    }
+                    </div>
+                }
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>

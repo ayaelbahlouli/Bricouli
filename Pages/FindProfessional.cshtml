@@ -1,0 +1,150 @@
+@page
+@model Bricouli.Pages.FindProfessionalModel
+@{
+ Layout = "~/Views/Shared/_Layout.cshtml";
+ ViewData["Title"] = "Trouver un Professionnel";
+}
+
+<section class="features-section page-section" style="padding-top:80px;">
+ <div class="container">
+ <div class="page-hero hero-rich">
+ <span class="eyebrow">Recherche</span>
+ <h2 class="section-title">Trouver un Professionnel</h2>
+ <p class="section-subtitle">Trouvez rapidement un professionnel verifie, comparez les profils et contactez en direct.</p>
+ </div>
+
+ <div class="hero-split">
+ <div class="hero-panel">
+ <h4>Professionnels verifies</h4>
+ <p>Affiche uniquement les comptes approuves pour garantir la qualite.</p>
+ </div>
+ <div class="hero-panel">
+ <h4>Contact immediat</h4>
+ <p>Appelez ou envoyez un email en un clic depuis la fiche.</p>
+ </div>
+ </div>
+
+ <div class="form-card">
+ <div class="form-header">
+ <h3>Recherche avancee</h3>
+ <p class="section-muted">Filtrez par metier et mot-cle, puis triez selon vos priorites.</p>
+ </div>
+ <div class="form-body">
+ <form method="get" class="search-card" id="findProForm">
+ <div class="form-grid">
+ <div class="form-group">
+ <label for="q">Recherche</label>
+ <input id="q" name="q" value="@Model.Q" placeholder="Ex: plombier, electricien" class="form-input" />
+ </div>
+ <div class="form-group">
+ <label for="category">Categorie</label>
+ <select id="category" name="category" class="form-input">
+ <option value="">Toutes les categories</option>
+ @foreach (var category in Model.Categories)
+ {
+     <option value="@category" selected="@(category == Model.Category)">@category</option>
+ }
+ </select>
+ </div>
+ <div class="form-group">
+ <label for="sort">Tri</label>
+ <select id="sort" name="sort" class="form-input">
+ <option value="newest" selected="@(Model.Sort == "newest" || string.IsNullOrEmpty(Model.Sort))">Les plus recents</option>
+ <option value="oldest" selected="@(Model.Sort == "oldest")">Les plus anciens</option>
+ <option value="name" selected="@(Model.Sort == "name")">Par nom</option>
+ </select>
+ </div>
+ </div>
+ <div class="form-actions">
+ <button class="btn-primary" type="submit">Rechercher</button>
+ <a class="btn-secondary" href="/FindProfessional">Reinitialiser</a>
+ </div>
+ </form>
+
+ <div class="find-toolbar">
+ <div class="provider-meta">
+ <div class="pill">@Model.ResultCount resultats</div>
+ <div class="pill">@Model.TotalApprovedCount pros verifies</div>
+ </div>
+ <div class="find-quick">
+ <span class="section-muted">Categories populaires</span>
+ <div class="quick-pills">
+ @foreach (var item in Model.PopularCategories)
+ {
+     <a class="pill" href="/FindProfessional?category=@item">@item</a>
+ }
+ </div>
+ </div>
+ </div>
+ </div>
+ </div>
+
+ <div class="provider-grid" id="providerGrid">
+ @if (!Model.Results.Any())
+ {
+     <div class="empty-state">
+         <h3>Aucun prestataire trouve</h3>
+         <p>Essayez avec un autre mot-cle ou changez les filtres.</p>
+     </div>
+ }
+ else
+ {
+     @foreach (var pro in Model.Results)
+     {
+         <div class="provider-card" data-id="@pro.Id">
+             <div class="provider-card-header">
+                 <div>
+                     <h4>@pro.Name</h4>
+                     <div class="provider-category">@pro.Category</div>
+                 </div>
+                 <span class="status-pill status-approved">Verifie</span>
+             </div>
+             <p class="provider-desc">@(string.IsNullOrWhiteSpace(pro.Description) ? "Profil en cours de completion." : pro.Description)</p>
+             <div class="provider-actions provider-info">
+                 <div class="provider-info-item">Email: <a href="mailto:@pro.Email">@pro.Email</a></div>
+                 <div class="provider-info-item">Telephone: <a href="tel:@pro.Phone">@pro.Phone</a></div>
+                 <button type="button" class="favorite-btn" data-id="@pro.Id">Enregistrer</button>
+             </div>
+         </div>
+     }
+ }
+ </div>
+ </div>
+</section>
+
+@section Scripts {
+<script>
+(function () {
+    var storageKey = 'bricouli_favorites';
+    var favorites = new Set(JSON.parse(localStorage.getItem(storageKey) || '[]'));
+
+    function syncButtons() {
+        document.querySelectorAll('.favorite-btn').forEach(function (btn) {
+            var id = btn.getAttribute('data-id');
+            if (favorites.has(id)) {
+                btn.classList.add('is-active');
+                btn.textContent = 'Enregistre';
+            } else {
+                btn.classList.remove('is-active');
+                btn.textContent = 'Enregistrer';
+            }
+        });
+    }
+
+    document.querySelectorAll('.favorite-btn').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+            var id = btn.getAttribute('data-id');
+            if (favorites.has(id)) {
+                favorites.delete(id);
+            } else {
+                favorites.add(id);
+            }
+            localStorage.setItem(storageKey, JSON.stringify(Array.from(favorites)));
+            syncButtons();
+        });
+    });
+
+    syncButtons();
+})();
+</script>
+}

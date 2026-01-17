@@ -1,0 +1,96 @@
+﻿@model Bricouli.Models.DevisRequest
+@{
+ ViewData["Title"] = "Demander un devis";
+}
+
+<section class="features-section page-section" style="padding-top:80px;">
+ <div class="container">
+ <div class="page-hero hero-rich">
+ <span class="eyebrow">Devis</span>
+ <h2 class="section-title">Demander un devis</h2>
+ <p class="section-subtitle">Decrivez votre besoin et recevez des propositions rapidement.</p>
+ </div>
+
+ <div class="form-card">
+ <div class="form-header">
+ <h3>Votre demande</h3>
+ <p class="section-muted">Plus vous etes precis, plus vous recevrez des offres pertinentes.</p>
+ </div>
+ <div class="form-body">
+ @if (ViewBag.Success == true)
+ {
+ <div class="feed-pill" style="display:inline-flex; margin-bottom:16px;">Votre demande a bien ete envoyee.</div>
+ }
+ <form id="devisForm" method="post" class="contact-form">
+ @Html.AntiForgeryToken()
+
+ <div class="form-grid compact-grid">
+ <div class="form-group">
+ <label for="devisName">Votre nom complet <span class="required">*</span></label>
+ <input type="text" id="devisName" name="Name" class="form-input" placeholder="Jean Dupont" required value="@Model.Name" />
+ @Html.ValidationMessageFor(m => m.Name)
+ </div>
+ <div class="form-group">
+ <label for="devisEmail">Votre email <span class="required">*</span></label>
+ <input type="email" id="devisEmail" name="Email" class="form-input" placeholder="jean@example.com" required value="@Model.Email" />
+ @Html.ValidationMessageFor(m => m.Email)
+ </div>
+ <div class="form-group">
+ <label for="devisPhone">Votre telephone <span class="required">*</span></label>
+ <input type="tel" id="devisPhone" name="Phone" class="form-input" placeholder="+2126XX XXX XXX" required value="@Model.Phone" />
+ @Html.ValidationMessageFor(m => m.Phone)
+ </div>
+ <div class="form-group">
+ <label for="devisCategory">Categorie de service <span class="required">*</span></label>
+ <select id="devisCategory" name="Category" class="form-input" required>
+ <option value="">-- Selectionnez une categorie --</option>
+ @if (Model.Category == "plomberie") { <option value="plomberie" selected>Plomberie</option> } else { <option value="plomberie">Plomberie</option> }
+ @if (Model.Category == "electricite") { <option value="electricite" selected>Electricite</option> } else { <option value="electricite">Electricite</option> }
+ @if (Model.Category == "menuiserie") { <option value="menuiserie" selected>Menuiserie</option> } else { <option value="menuiserie">Menuiserie</option> }
+ @if (Model.Category == "peinture") { <option value="peinture" selected>Peinture</option> } else { <option value="peinture">Peinture</option> }
+ @if (Model.Category == "jardinage") { <option value="jardinage" selected>Jardinage</option> } else { <option value="jardinage">Jardinage</option> }
+ @if (Model.Category == "demenagement") { <option value="demenagement" selected>Demenagement</option> } else { <option value="demenagement">Demenagement</option> }
+ @if (Model.Category == "evenements") { <option value="evenements" selected>Evenements</option> } else { <option value="evenements">Evenements</option> }
+ @if (Model.Category == "musique") { <option value="musique" selected>Musique</option> } else { <option value="musique">Musique</option> }
+ @if (Model.Category == "autre") { <option value="autre" selected>Autre</option> } else { <option value="autre">Autre</option> }
+ </select>
+ @Html.ValidationMessageFor(m => m.Category)
+ </div>
+ <div class="form-group">
+ <label for="devisLocation">Lieu de l'intervention <span class="required">*</span></label>
+ <input type="text" id="devisLocation" name="Location" class="form-input" placeholder="Casablanca, Marrakech..." required value="@Model.Location" />
+ @Html.ValidationMessageFor(m => m.Location)
+ </div>
+ <div class="form-group">
+ <label for="devisBudget">Budget estime (MAD)</label>
+ <input type="number" id="devisBudget" name="Budget" class="form-input" placeholder="Ex: 5000" min="0" value="@Model.Budget" />
+ @Html.ValidationMessageFor(m => m.Budget)
+ </div>
+ </div>
+
+ <div class="form-group">
+ <label for="devisDescription">Description de votre projet <span class="required">*</span></label>
+ <textarea id="devisDescription" name="Description" class="form-textarea" placeholder="Decrivez votre besoin en detail..." rows="6" required>@Model.Description</textarea>
+ @Html.ValidationMessageFor(m => m.Description)
+ </div>
+ <div class="form-group">
+ <label for="devisUrgency">Urgence <span class="required">*</span></label>
+ <select id="devisUrgency" name="Urgency" class="form-input" required>
+ <option value="">-- Selectionnez l'urgence --</option>
+ @if (Model.Urgency == "immediate") { <option value="immediate" selected>Immediate (dans les 24h)</option> } else { <option value="immediate">Immediate (dans les 24h)</option> }
+ @if (Model.Urgency == "week") { <option value="week" selected>Cette semaine</option> } else { <option value="week">Cette semaine</option> }
+ @if (Model.Urgency == "month") { <option value="month" selected>Ce mois</option> } else { <option value="month">Ce mois</option> }
+ @if (Model.Urgency == "flexible") { <option value="flexible" selected>Flexible</option> } else { <option value="flexible">Flexible</option> }
+ </select>
+ @Html.ValidationMessageFor(m => m.Urgency)
+ </div>
+
+ <div class="form-actions">
+ <button type="submit" class="btn-primary">Envoyer ma demande</button>
+ <a class="btn-secondary" href="/">Annuler</a>
+ </div>
+ </form>
+ </div>
+ </div>
+ </div>
+</section>

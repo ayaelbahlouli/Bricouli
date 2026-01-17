@@ -1,0 +1,33 @@
+﻿@page
+@model Bricouli.Pages.Account.LoginModel
+@{
+ Layout = "~/Views/Shared/_Layout.cshtml";
+ ViewData["Title"] = "Connexion";
+}
+
+<section class="auth-section">
+ <div class="auth-container">
+ <h2 class="section-title">Connexion</h2>
+ <p class="section-subtitle">Connectez-vous pour acceder a votre compte.</p>
+
+ <div class="form-card auth-card">
+ <div class="form-body">
+ <form method="post">
+ @Html.AntiForgeryToken()
+ <div class="form-group">
+ <label for="email">Email</label>
+ <input id="email" name="Email" type="email" class="form-input" required />
+ </div>
+ <div class="form-group">
+ <label for="password">Mot de passe</label>
+ <input id="password" name="Password" type="password" class="form-input" required />
+ </div>
+ <div class="form-actions">
+ <button class="btn-primary" type="submit">Se connecter</button>
+ <a href="/" class="btn-secondary">Annuler</a>
+ </div>
+ </form>
+ </div>
+ </div>
+ </div>
+</section>

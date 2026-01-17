@@ -1,0 +1,29 @@
+@model Bricouli.Models.ContactMessage
+@{
+    ViewData["Title"] = "Modifier un message";
+}
+
+<div class="admin-form-card admin-fade">
+    <form asp-area="Admin" asp-controller="ContactMessages" asp-action="Edit" method="post">
+        @Html.AntiForgeryToken()
+        <input type="hidden" asp-for="Id" />
+        <div class="form-grid">
+            <div class="form-group">
+                <label asp-for="Name">Nom</label>
+                <input asp-for="Name" class="form-input" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Email">Email</label>
+                <input asp-for="Email" class="form-input" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="Message">Message</label>
+            <textarea asp-for="Message" class="form-textarea" rows="5"></textarea>
+        </div>
+        <div class="form-actions">
+            <button class="btn-primary" type="submit">Mettre a jour</button>
+            <a class="btn-secondary" asp-area="Admin" asp-controller="ContactMessages" asp-action="Index">Annuler</a>
+        </div>
+    </form>
+</div>

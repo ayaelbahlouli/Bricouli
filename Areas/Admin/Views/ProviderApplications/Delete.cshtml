@@ -1,0 +1,17 @@
+@model Bricouli.Models.ProviderApplication
+@{
+    ViewData["Title"] = "Supprimer un prestataire";
+}
+
+<div class="admin-form-card admin-fade">
+    <h3>Confirmer la suppression</h3>
+    <p>Voulez-vous supprimer la demande de <strong>@Model.Name</strong> ?</p>
+    <form asp-area="Admin" asp-controller="ProviderApplications" asp-action="Delete" method="post">
+        @Html.AntiForgeryToken()
+        <input type="hidden" asp-for="Id" />
+        <div class="form-actions">
+            <button class="btn-primary" type="submit">Supprimer</button>
+            <a class="btn-secondary" asp-area="Admin" asp-controller="ProviderApplications" asp-action="Index">Annuler</a>
+        </div>
+    </form>
+</div>
